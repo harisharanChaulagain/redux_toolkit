@@ -1,17 +1,35 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import '../App.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { add} from '../store/cartSlice';
+import { fetchProducts } from '../store/productsSlice';
+import {STATUSES} from '../store/productsSlice';
+
 
 const Product = () => {
-    const[products, setProducts] = useState([]);
+    const dispatch = useDispatch();
+    const {data:products, status} = useSelector((state) =>state.product)
+    // const[products, setProducts] = useState([]);
+
 
     useEffect(() =>{
-            const fetchProducts = async () =>{
-                const res = await fetch('https://fakestoreapi.com/products');
-                const data = await res.json();
-                setProducts(data);
-            }
-            fetchProducts();
+            // const fetchProducts = async () =>{
+            //     const res = await fetch('https://fakestoreapi.com/products');
+            //     const data = await res.json();
+            //     setProducts(data);
+            // }
+            // fetchProducts();
+            dispatch(fetchProducts());
     }, []);
+
+    const handleAdd =(product) =>{
+      dispatch(add(product));
+    }
+
+    if(status===STATUSES.LOADING)
+    {
+      return <h2>Loading....</h2>
+    }
     return (
         <>
             <div>
@@ -20,7 +38,7 @@ const Product = () => {
                 <img src={product.image} alt="" />
                 <h4>{product.title}</h4>
                 <h4>{product.price}</h4>
-                <button className="btn">Add to Cart</button>
+                <button onClick={() => handleAdd(product)} className="btn">Add to Cart</button>
             </div>
               ))}
             </div>
