@@ -1,0 +1,20 @@
+img{
+    height: 80px;
+}
+.card{
+    background: white;
+    text-align: center;
+    padding: 20px;
+}
+.homepage{
+    text-decoration: none;
+    padding: 10px;
+}
+.cartpage{
+    text-decoration: none;
+    padding: 10px;
+}
+.cartitems{
+    padding: 10px;
+    font-weight: bold;
+}
